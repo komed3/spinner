@@ -37,7 +37,7 @@ header {
     background: rgba( 0 0 0 / 0.2 );
 }
 
-header h1 {
+.header-title h1 {
     margin: 0;
     font-size: 2.5rem;
     font-weight: 900;
@@ -45,7 +45,7 @@ header h1 {
     text-transform: uppercase;
 }
 
-header h2 {
+.header-title h2 {
     margin: 0;
     font-size: 1.2rem;
     font-weight: 400;
@@ -53,7 +53,7 @@ header h2 {
     text-transform: uppercase;
 }
 
-header .button a {
+.header-button a {
     padding: 12px 24px;
     text-decoration: none;
     font-size: 18px;
@@ -62,4 +62,16 @@ header .button a {
     background: var( --text-color );
     box-shadow: 0 2px 12px #0002;
     border-radius: 14px;
+}
+
+footer {
+    margin: 32px 0 18px;
+    font-size: 0.95rem;
+    text-align: center;
+    color: var( --text-secondary );
+}
+
+.footer-sep {
+    margin: 0 8px;
+    color: var( --text-tertiary );
 }

@@ -5,23 +5,24 @@
   --spinner-bg: #fff5;
   --spinner-speed: 1s;
   --spinner-dot-size: 10px;
-  --spinner-dot-bg: var(--spinner-color);
 }
 
 /* Base */
 .spinner {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: var(--spinner-size);
   height: var(--spinner-size);
-  vertical-align: middle;
   position: relative;
+  margin: 0 auto;
 }
 
 /* Utility for dots */
-.spinner-dot {
+.spinner-dot, .spinner span {
   width: var(--spinner-dot-size);
   height: var(--spinner-dot-size);
-  background: var(--spinner-dot-bg);
+  background: var(--spinner-color);
   border-radius: 50%;
   display: block;
   position: absolute;
@@ -35,44 +36,35 @@
   animation: spin var(--spinner-speed) linear infinite;
 }
 
-/* 2. Double Dot (animated dots rotating around center) */
-.spinner-2 {
-  position: relative;
-}
+/* 2. Double Dot */
 .spinner-2 span {
-  position: absolute;
-  width: 12px; height: 12px;
-  background: var(--spinner-color);
-  border-radius: 50%;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%) rotate(0deg) translateY(-16px);
   animation: double-dot-spin 1s linear infinite;
 }
-.spinner-2 span:nth-child(2) {
-  animation-delay: .5s;
-}
+.spinner-2 span:nth-child(2) { animation-delay: .5s; }
 
 /* 3. Pulsing Dot */
 .spinner-3 {
-  width: 16px; height: 16px; margin: 16px auto;
+  width: 16px; height: 16px;
   background: var(--spinner-color);
   border-radius: 50%;
   animation: pulse var(--spinner-speed) infinite alternate;
+  position: static;
 }
 
 /* 4. Three Bouncing Dots */
-.spinner-4, .spinner-12, .spinner-18, .spinner-22, .spinner-24, .spinner-28 {
+.spinner-4, .spinner-12, .spinner-18, .spinner-22, .spinner-24, .spinner-28, .spinner-31, .spinner-33, .spinner-38 {
   width: var(--spinner-size); height: 16px;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  position: static;
 }
-.spinner-4 span, .spinner-12 span, .spinner-18 span, .spinner-22 span, .spinner-24 span, .spinner-28 span {
-  width: var(--spinner-dot-size); height: var(--spinner-dot-size);
-  background: var(--spinner-color);
-  border-radius: 50%;
+.spinner-4 span, .spinner-12 span, .spinner-18 span, .spinner-22 span, .spinner-24 span, .spinner-28 span, .spinner-31 span, .spinner-33 span, .spinner-38 span {
+  position: static;
+  animation: bounce .8s infinite alternate;
 }
-.spinner-4 span { animation: bounce .8s infinite alternate; }
-.spinner-4 span:nth-child(2) { animation-delay: .2s; }
-.spinner-4 span:nth-child(3) { animation-delay: .4s; }
+.spinner-4 span:nth-child(2), .spinner-12 span:nth-child(2), .spinner-18 span:nth-child(2), .spinner-22 span:nth-child(2), .spinner-24 span:nth-child(2), .spinner-28 span:nth-child(2), .spinner-31 span:nth-child(2), .spinner-33 span:nth-child(2), .spinner-38 span:nth-child(2) { animation-delay: .2s; }
+.spinner-4 span:nth-child(3), .spinner-12 span:nth-child(3), .spinner-18 span:nth-child(3), .spinner-22 span:nth-child(3), .spinner-24 span:nth-child(3), .spinner-28 span:nth-child(3), .spinner-31 span:nth-child(3), .spinner-33 span:nth-child(3), .spinner-38 span:nth-child(3) { animation-delay: .4s; }
 
 /* 5. Dual Ring */
 .spinner-5 {
@@ -90,6 +82,7 @@
   border-radius: 4px;
   animation: bar-move 1s linear infinite;
   background-size: 200% 100%;
+  position: static;
 }
 
 /* 7. Quarter Circle */
@@ -105,36 +98,25 @@
   width: 20px; height: 20px;
   background: var(--spinner-color);
   animation: scale .8s infinite alternate;
-  margin: 14px auto;
+  border-radius: 4px;
+  position: static;
 }
 
-/* 9. Double Circles (two dots rotating in opposite directions) */
-.spinner-9 {
-  position: relative;
-}
+/* 9. Double Circles (two dots on opposite sides, rotating) */
 .spinner-9 span {
-  position: absolute;
-  width: 12px; height: 12px;
-  background: var(--spinner-color);
-  border-radius: 50%;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%) rotate(0deg) translateY(-16px);
-  animation: double-circles-spin 1s linear infinite;
+  animation: double-dot-spin 1s linear infinite;
 }
 .spinner-9 span:nth-child(2) {
-  animation-direction: reverse;
+  transform: translate(-50%, -50%) rotate(180deg) translateY(-16px);
+  animation-delay: .5s;
 }
 
-/* 10. Dot Circle (fixed) */
-.spinner-10 {
-  position: relative;
-}
+/* 10. Dot Circle (10 dots in a circle) */
 .spinner-10 span {
-  position: absolute;
-  width: 8px; height: 8px;
-  background: var(--spinner-color);
-  border-radius: 50%;
   left: 50%; top: 50%;
+  width: 8px; height: 8px;
   transform: translate(-50%, -50%) rotate(calc(var(--i) * 36deg)) translateY(-20px);
   animation: dot-circle 1s linear infinite;
   animation-delay: calc(var(--i) * 0.1s);
@@ -151,18 +133,20 @@
 .spinner-10 span:nth-child(9) { --i: 8; }
 .spinner-10 span:nth-child(10) { --i: 9; }
 
-/* 11. Rotating Line (centered) */
+/* 11. Rotating Line (centered, visible) */
 .spinner-11 {
-  position: relative;
+  display: flex; align-items: center; justify-content: center;
 }
-.spinner-11 span {
-  position: absolute;
-  left: 50%; top: 50%;
+.spinner-11::after {
+  content: "";
+  display: block;
   width: 60%; height: 4px;
   background: var(--spinner-color);
   border-radius: 2px;
+  position: absolute;
+  left: 50%; top: 50%;
   transform: translate(-50%, -50%);
-  transform-origin: left center;
+  transform-origin: center center;
   animation: spin .7s linear infinite;
 }
 
@@ -199,16 +183,14 @@
 /* 15. Zigzag */
 .spinner-15 {
   width: 40px; height: 8px; position: relative;
+  display: flex; align-items: flex-end; justify-content: space-between;
 }
 .spinner-15 span {
-  display: block; position: absolute;
-  width: 8px; height: 8px;
-  background: var(--spinner-color); border-radius: 50%;
+  position: static;
   animation: zigzag 1s infinite;
 }
-.spinner-15 span:nth-child(1) { left: 0; animation-delay: 0s; }
-.spinner-15 span:nth-child(2) { left: 16px; animation-delay: .2s; }
-.spinner-15 span:nth-child(3) { left: 32px; animation-delay: .4s; }
+.spinner-15 span:nth-child(2) { animation-delay: .2s; }
+.spinner-15 span:nth-child(3) { animation-delay: .4s; }
 
 /* 16. Rotating Square */
 .spinner-16 {
@@ -223,6 +205,8 @@
   width: 24px; height: 24px;
   background: var(--spinner-color);
   animation: flip 1s infinite linear;
+  border-radius: 4px;
+  position: static;
 }
 
 /* 18. Dots UpDown */
@@ -238,15 +222,13 @@
   border-bottom: 42px solid var(--spinner-color);
   animation: spin 1s linear infinite;
   border-radius: 6px;
+  position: static;
 }
 
 /* 20. Dots Around */
 .spinner-20 span {
-  position: absolute;
-  width: 8px; height: 8px;
-  background: var(--spinner-color);
-  border-radius: 50%;
   left: 50%; top: 50%;
+  width: 8px; height: 8px;
   transform: translate(-50%, -50%) rotate(calc(var(--i) * 72deg)) translateY(-20px);
   animation: around 1.2s linear infinite;
   animation-delay: calc(var(--i) * 0.2s);
@@ -256,8 +238,6 @@
 .spinner-20 span:nth-child(3) { --i: 2; }
 .spinner-20 span:nth-child(4) { --i: 3; }
 .spinner-20 span:nth-child(5) { --i: 4; }
-
-/* --- NEW SPINNERS --- */
 
 /* 21. Growing Bar */
 .spinner-21 {
@@ -271,22 +251,21 @@
 }
 
 /* 22. Five Dots Bounce */
-.spinner-22 span { animation: bounce .8s infinite alternate; }
 .spinner-22 span:nth-child(2) { animation-delay: .1s; }
 .spinner-22 span:nth-child(3) { animation-delay: .2s; }
 .spinner-22 span:nth-child(4) { animation-delay: .3s; }
 .spinner-22 span:nth-child(5) { animation-delay: .4s; }
 
-/* 23. Rotating Dots (circle) */
-.spinner-23 span {
-  position: absolute;
-  width: 8px; height: 8px;
-  background: var(--spinner-color); border-radius: 50%;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%) rotate(calc(var(--i) * 90deg)) translateY(-18px);
-  animation: spin 1s linear infinite;
-  animation-delay: calc(var(--i) * 0.2s);
+/* 23. Rotating Dots (4 dots, always on circle, rotate as a group) */
+.spinner-23 {
+  position: relative;
 }
+.spinner-23 span {
+  left: 50%; top: 50%;
+  width: 8px; height: 8px;
+  transform: translate(-50%, -50%) rotate(calc(var(--i) * 90deg)) translateY(-18px);
+}
+.spinner-23 { animation: spin 1s linear infinite; }
 .spinner-23 span { --i: 0; }
 .spinner-23 span:nth-child(2) { --i: 1; }
 .spinner-23 span:nth-child(3) { --i: 2; }
@@ -297,23 +276,23 @@
 .spinner-24 span:nth-child(2) { animation-delay: .2s; }
 .spinner-24 span:nth-child(3) { animation-delay: .4s; }
 
-/* 25. Rotating Bar */
+/* 25. Dots Wave (NEW: 5 dots, wave up/down) */
+.spinner-25, .spinner-25 span {
+  position: static;
+}
 .spinner-25 {
-  width: var(--spinner-size); height: var(--spinner-size);
+  width: var(--spinner-size); height: 16px;
+  display: flex; align-items: flex-end; justify-content: space-between;
 }
-.spinner-25::after {
-  content: "";
-  display: block;
-  width: 80%; height: 4px;
-  background: var(--spinner-color);
-  border-radius: 2px;
-  position: absolute;
-  top: 50%; left: 10%;
-  transform-origin: left center;
-  animation: spin .5s linear infinite;
+.spinner-25 span {
+  animation: wave 1s infinite;
 }
+.spinner-25 span:nth-child(2) { animation-delay: .1s; }
+.spinner-25 span:nth-child(3) { animation-delay: .2s; }
+.spinner-25 span:nth-child(4) { animation-delay: .3s; }
+.spinner-25 span:nth-child(5) { animation-delay: .4s; }
 
-/* 26. Pulse Ring */
+/* 26. Pulse Ring (single color, pulse scale) */
 .spinner-26 {
   border: var(--spinner-thick) solid var(--spinner-bg);
   border-top: var(--spinner-thick) solid var(--spinner-color);
@@ -322,9 +301,6 @@
 }
 
 /* 27. Dots Slide */
-.spinner-27 {
-  width: 40px; height: 8px; position: relative;
-}
 .spinner-27 span {
   position: absolute; top: 0;
   width: 8px; height: 8px; border-radius: 50%;
@@ -336,22 +312,22 @@
 .spinner-27 span:nth-child(3) { left: 32px; animation-delay: .4s; }
 
 /* 28. Five Dots UpDown */
-.spinner-28 span { animation: updown .8s infinite alternate; }
 .spinner-28 span:nth-child(2) { animation-delay: .1s; }
 .spinner-28 span:nth-child(3) { animation-delay: .2s; }
 .spinner-28 span:nth-child(4) { animation-delay: .3s; }
 .spinner-28 span:nth-child(5) { animation-delay: .4s; }
 
-/* 29. Rotating Square Dots */
-.spinner-29 span {
-  position: absolute;
-  width: 8px; height: 8px;
-  background: var(--spinner-color); border-radius: 2px;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%) rotate(calc(var(--i) * 90deg)) translateY(-18px);
-  animation: spin 1s linear infinite;
-  animation-delay: calc(var(--i) * 0.2s);
+/* 29. Rotating Square Dots (4 squares, rotate as a group) */
+.spinner-29 {
+  position: relative;
 }
+.spinner-29 span {
+  left: 50%; top: 50%;
+  width: 8px; height: 8px; border-radius: 2px;
+  background: var(--spinner-color);
+  transform: translate(-50%, -50%) rotate(calc(var(--i) * 90deg)) translateY(-18px);
+}
+.spinner-29 { animation: spin 1s linear infinite; }
 .spinner-29 span { --i: 0; }
 .spinner-29 span:nth-child(2) { --i: 1; }
 .spinner-29 span:nth-child(3) { --i: 2; }
@@ -363,20 +339,11 @@
   background: var(--spinner-color);
   transform: rotate(45deg);
   animation: spin 1s linear infinite;
+  border-radius: 4px;
+  position: static;
 }
 
-/* 31. Dots Pulse */
-.spinner-31 {
-  width: var(--spinner-size); height: 16px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.spinner-31 span {
-  width: var(--spinner-dot-size); height: var(--spinner-dot-size);
-  background: var(--spinner-color); border-radius: 50%;
-  animation: pulse .8s infinite alternate;
-}
-.spinner-31 span:nth-child(2) { animation-delay: .2s; }
-.spinner-31 span:nth-child(3) { animation-delay: .4s; }
+/* 31. Dots Pulse (reuse .spinner-31 above) */
 
 /* 32. Rotating Half Ring */
 .spinner-32 {
@@ -387,19 +354,12 @@
   animation: spin .7s linear infinite;
 }
 
-/* 33. Dots Grow */
-.spinner-33 span {
-  width: var(--spinner-dot-size); height: var(--spinner-dot-size);
-  background: var(--spinner-color); border-radius: 50%;
-  display: inline-block; margin: 0 2px;
-  animation: grow 1s infinite;
-}
-.spinner-33 span:nth-child(2) { animation-delay: .2s; }
-.spinner-33 span:nth-child(3) { animation-delay: .4s; }
+/* 33. Dots Grow (reuse .spinner-33 above) */
 
 /* 34. Rotating Plus */
 .spinner-34 {
   width: 32px; height: 32px; position: relative;
+  animation: spin 1s linear infinite;
 }
 .spinner-34::before, .spinner-34::after {
   content: ""; position: absolute; background: var(--spinner-color);
@@ -413,14 +373,12 @@
   width: 4px; height: 60%; left: 50%; top: 20%;
   transform: translateX(-50%);
 }
-.spinner-34 { animation: spin 1s linear infinite; }
 
 /* 35. Dots Rotate Fade */
 .spinner-35 span {
-  position: absolute;
+  left: 50%; top: 50%;
   width: 8px; height: 8px;
   background: var(--spinner-color); border-radius: 50%;
-  left: 50%; top: 50%;
   transform: translate(-50%, -50%) rotate(calc(var(--i) * 60deg)) translateY(-18px);
   animation: fade-rotate 1.2s linear infinite;
   animation-delay: calc(var(--i) * 0.2s);
@@ -433,9 +391,6 @@
 .spinner-35 span:nth-child(6) { --i: 5; }
 
 /* 36. Rotating Bar Dots */
-.spinner-36 {
-  width: 40px; height: 8px; position: relative;
-}
 .spinner-36 span {
   position: absolute; top: 0;
   width: 8px; height: 8px; border-radius: 50%;
@@ -446,35 +401,26 @@
 .spinner-36 span:nth-child(2) { left: 16px; animation-delay: .2s; }
 .spinner-36 span:nth-child(3) { left: 32px; animation-delay: .4s; }
 
-/* 37. Rotating Hexagon */
+/* 37. Rotating Hexagon (now a regular hexagon, rotates) */
 .spinner-37 {
   width: 32px; height: 32px;
-  background: repeating-linear-gradient(60deg, var(--spinner-color) 0 4px, transparent 4px 8px);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: var(--spinner-color);
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
   animation: spin 1s linear infinite;
 }
 
-/* 38. Dots Expand */
-.spinner-38 span {
-  width: var(--spinner-dot-size); height: var(--spinner-dot-size);
-  background: var(--spinner-color); border-radius: 50%;
-  display: inline-block; margin: 0 2px;
-  animation: expand 1s infinite;
-}
-.spinner-38 span:nth-child(2) { animation-delay: .2s; }
-.spinner-38 span:nth-child(3) { animation-delay: .4s; }
+/* 38. Dots Expand (reuse .spinner-38 above) */
 
-/* 39. Rotating Ellipsis */
+/* 39. Rotating Ellipsis (3 dots, rotate as a group) */
 .spinner-39 {
-  width: 32px; height: 16px; position: relative;
+  position: relative;
+  width: 32px; height: 16px;
+  animation: spin 1s linear infinite;
 }
 .spinner-39 span {
-  position: absolute; top: 50%; left: 50%;
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--spinner-color);
+  left: 50%; top: 50%;
+  width: 8px; height: 8px;
   transform: translate(-50%, -50%) rotate(calc(var(--i) * 120deg)) translateY(-8px);
-  animation: spin 1s linear infinite;
-  animation-delay: calc(var(--i) * 0.2s);
 }
 .spinner-39 span { --i: 0; }
 .spinner-39 span:nth-child(2) { --i: 1; }
@@ -483,6 +429,7 @@
 /* 40. Rotating Cross */
 .spinner-40 {
   width: 32px; height: 32px; position: relative;
+  animation: spin 1s linear infinite;
 }
 .spinner-40::before, .spinner-40::after {
   content: ""; position: absolute; background: var(--spinner-color);
@@ -496,7 +443,6 @@
   width: 4px; height: 60%; left: 50%; top: 20%;
   transform: translateX(-50%) rotate(45deg);
 }
-.spinner-40 { animation: spin 1s linear infinite; }
 
 /* --- Keyframes --- */
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -559,6 +505,7 @@
 @keyframes double-dot-spin {
   100% { transform: translate(-50%, -50%) rotate(360deg) translateY(-16px);}
 }
-@keyframes double-circles-spin {
-  100% { transform: translate(-50%, -50%) rotate(360deg) translateY(-16px);}
+@keyframes wave {
+  0%,100% { transform: translateY(0);}
+  50% { transform: translateY(-12px);}
 }
